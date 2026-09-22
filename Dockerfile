@@ -26,7 +26,6 @@ RUN apt-get update -qq && \
 # Keep deployment mode off here so a lockfile can be generated during local Docker builds.
 ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
     LD_PRELOAD="/usr/local/lib/libjemalloc.so"
 
 # Throw-away build stage to reduce size of final image
