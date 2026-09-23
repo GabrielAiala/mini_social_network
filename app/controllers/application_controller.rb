@@ -1,13 +1,11 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
   before_action :authenticate_request
-
-  attr_reader :current_user
 
   private
 
   def authenticate_request
     header = request.headers["Authorization"]
-    token = header&.split(" ")&.last # formato: "Bearer <token>"
+    token = header&.split(" ")&.last
 
     decoded = JsonWebToken.decode(token)
 
