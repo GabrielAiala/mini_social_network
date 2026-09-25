@@ -11,8 +11,17 @@ class PostsController < ApplicationController
   end
 
   def following
-    @paggy, @posts = pagy(Post.where(user: @current_user.following).order(created_at: :desc))
-    render json: @posts
+    posts = Post
+      .where(user: [ @current_user.following, @current_user ])
+      .joins(:user)
+      .select("posts.*, users.name as user_name")
+      .order(created_at: :desc)
+
+    @pagy, @posts = pagy(posts)
+    render json: {
+      posts: @posts,
+      pagination: pagy_metadata(@pagy)
+    }
   end
 
   private
