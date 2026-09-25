@@ -27,9 +27,12 @@ RSpec.describe PostsController, type: :controller do
 
       get :following, as: :json
 
+      json = JSON.parse(response.body)
+
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body).map { |post| post['content'] }).to include('Post do seguido')
-      expect(JSON.parse(response.body).any? { |post| post['id'] == followed_post.id }).to be(true)
+      expect(json['posts'].map { |post| post['content'] }).to include('Post do seguido')
+      expect(json['posts'].any? { |post| post['id'] == followed_post.id }).to be(true)
+      expect(json).to have_key('pagination')
     end
   end
 end

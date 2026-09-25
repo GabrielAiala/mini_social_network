@@ -11,11 +11,10 @@ class PostsController < ApplicationController
   end
 
   def following
-    posts = Post
-      .where(user: [ @current_user.following, @current_user ])
-      .joins(:user)
-      .select("posts.*, users.name as user_name")
-      .order(created_at: :desc)
+    posts = Post.where(user: @current_user.following)
+                .or(Post.where(user: @current_user))
+                .includes(:user)
+                .order(created_at: :desc)
 
     @pagy, @posts = pagy(posts)
     render json: {

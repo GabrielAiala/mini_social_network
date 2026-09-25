@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   post "/login", to: "auth#login"
   post "/signup", to: "users#create"
 
+  resources :likes, only: [ :create ]
+
   resources :posts, only: [ :create ] do
     # the route with collection looks like this: /posts/following
     collection do
