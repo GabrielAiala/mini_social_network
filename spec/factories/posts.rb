@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    user { nil }
+    association :user
     content { "MyText" }
   end
 end
