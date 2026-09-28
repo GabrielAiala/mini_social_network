@@ -12,6 +12,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def index
+    users = User.where.not(id: @current_user.id)
+                      .where("name ILIKE ?", "%#{search_params[:name]}%")
+                      .select(:id, :name, :email)
+    render json: users, status: :ok
+  end
+
+  def show
+    user = User.find(params[:id])
+    render json: user_response(user), status: :ok
+  end
+
   private
 
   def user_params
@@ -20,5 +32,9 @@ class UsersController < ApplicationController
 
   def user_response(user)
     { id: user.id, name: user.name, email: user.email }
+  end
+
+  def search_params
+    params.permit(:name)
   end
 end
