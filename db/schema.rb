@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_22_221037) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_28_210000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,6 +41,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_22_221037) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "user_recomendation_weights", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "metric_name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.float "weight", null: false
+    t.index ["user_id", "metric_name"], name: "index_user_recomendation_weights_on_user_id_and_metric_name", unique: true
+    t.index ["user_id"], name: "index_user_recomendation_weights_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -54,4 +64,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_22_221037) do
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "user_recomendation_weights", "users"
 end
