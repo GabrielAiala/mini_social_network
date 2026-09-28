@@ -20,18 +20,25 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
+    user = User.where(id: params[:id]).select(:id, :name, :email).first
     render json: user_response(user), status: :ok
   end
 
   private
 
-  def user_params
-    params.permit(:name, :email, :password, :password_confirmation)
+  def user_response(user)
+    is_following = user.present? && @current_user.following.exists?(id: user.id)
+
+    {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      following: is_following
+    }
   end
 
-  def user_response(user)
-    { id: user.id, name: user.name, email: user.email }
+  def user_params
+    params.permit(:name, :email, :password, :password_confirmation)
   end
 
   def search_params

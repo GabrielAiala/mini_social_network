@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :likes, only: [ :create ]
 
+  resources :follows, only: [ :create, :destroy ]
+
   resources :posts, only: [ :create ] do
     # the route with collection looks like this: /posts/following
     collection do
