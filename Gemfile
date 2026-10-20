@@ -25,7 +25,7 @@ gem "rack-cors"
 
 gem "pagy", "~> 8.6"
 
-gem "json", "< 3"
+gem "json", "< 4"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
