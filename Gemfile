@@ -23,7 +23,7 @@ gem "jwt"
 
 gem "rack-cors"
 
-gem "pagy", "~> 8.6"
+gem "pagy", "~> 43.8"
 
 gem "json", "< 3"
 
